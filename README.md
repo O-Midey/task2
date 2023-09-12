@@ -57,3 +57,6 @@ Before running the API, make sure you have the following installed:
 5. Start the server
     ```bash
    node index.js
+
+## Usage
+Once the server is running, you can interact with the API using HTTP requests. ** The base URL is http://localhost:3001/api. **
