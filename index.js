@@ -1,12 +1,11 @@
 import express from "express";
 import { MongoClient, ServerApiVersion } from "mongodb";
-import { createUser } from "./controllers/userController.js";
-import { User } from "./controllers/userController.js";
+import mongoose from "mongoose";
+import userRoutes from "./userRoutes.js";
+
 const app = express();
 const PORT = 3001;
-
 const uri = `mongodb+srv://talk2adeoluwa2310:56353087ac@cluster0.dtruxiy.mongodb.net/?retryWrites=true&w=majority`;
-
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -15,6 +14,7 @@ const client = new MongoClient(uri, {
   },
 });
 
+//Create MongoDB connection
 const connectToDB = async () => {
   try {
     await client.connect();
@@ -30,36 +30,31 @@ client.on("error", (err) => {
 
 connectToDB();
 
+// Connect Mongoose to the database
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+
+db.on("connected", () => {
+  console.log("Mongoose is connected to MongoDB");
+});
+
+db.on("error", (err) => {
+  console.error("MongoDB connection error:", err);
+});
+
+db.on("disconnected", () => {
+  console.log("MongoDB disconnected");
+});
+
+//Use JSON parser
 app.use(express.json());
 
-// Get all users
-app.get("/api", async (req, res) => {
-  try {
-    const users = await User.find().select("-__v");
-    res.status(200).json({ status: "success", data: users });
-  } catch (err) {
-    res.status(500).json({ status: "error", message: err.message });
-  }
-});
-
-//Create a new user
-app.post("/api/", createUser);
-
-//Find a user
-app.get("/api/:id", async (req, res) => {
-  const userId = req.params.id;
-  try {
-    const user = await User.findById(userId).select("-__v ");
-
-    if (!user) {
-      res.status(404).json({ status: "error", message: "User not found" });
-    } else {
-      res.status(200).json({ status: "success", data: user });
-    }
-  } catch (err) {
-    res.status(500).json({ status: "error", message: err.message });
-  }
-});
+//Use Routes
+app.use("/api", userRoutes);
 
 app.listen(PORT, () => {
   console.log(`App is listening on port ${PORT}`);
