@@ -41,3 +41,19 @@ Before running the API, make sure you have the following installed:
 
    ```bash
    git clone https://github.com/yourusername/user-management-api.git
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd user-management-api
+   
+3. Install dependencies:
+
+   ```bash
+   npm install
+   
+4. Set up your MongoDB connection by modifying the config.js file with your MongoDB URI.
+   
+5. Start the server
+    ```bash
+   node index.js
