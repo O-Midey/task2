@@ -75,6 +75,7 @@ Once the server is running, you can interact with the API using HTTP requests. *
 **Update a User by ID**
   PUT /users/{id}
 
+https://github.com/O-Midey/task2
 **Partially Update a User by ID**
   PATCH /users/{id}
 
