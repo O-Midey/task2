@@ -59,4 +59,24 @@ Before running the API, make sure you have the following installed:
    node index.js
 
 ## Usage
-Once the server is running, you can interact with the API using HTTP requests. ** The base URL is http://localhost:3001/api. **
+Once the server is running, you can interact with the API using HTTP requests. **The base URL is http://localhost:3001/api.**
+
+## API EndPoints
+
+**Create a User**
+  POST /users
+
+**Get All Users**
+  GET /users
+
+**Get a User by ID**
+  GET /users/{id}
+
+**Update a User by ID**
+  PUT /users/{id}
+
+**Partially Update a User by ID**
+  PATCH /users/{id}
+
+**Delete a User by ID**
+  DELETE /users/{id}
